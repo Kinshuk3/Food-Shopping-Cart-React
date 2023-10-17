@@ -2,7 +2,7 @@
 
 import CartContext from "./cart-context";
 
-const cartProvider = (props) => {
+const CartProvider = (props) => {
   const addItemToCartHandler = (item) => {};
   const removeItemToCartHandler = (id) => {};
 
@@ -20,4 +20,4 @@ const cartProvider = (props) => {
   );
 };
 
-export default cartProvider;
+export default CartProvider;
