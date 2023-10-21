@@ -5,6 +5,7 @@ import CartContext from "../../store/cart-context";
 const HeaderCartButton = (props) => {
   const cartCtx = useContext(CartContext)
 
+  // for every iteration of array element curNum keeps getting changed based on result we returned in prev execution
   const numOfCartItems = cartCtx.items.reduce((curNum, item)=> {
     return curNum + item.amount
   }, 0)

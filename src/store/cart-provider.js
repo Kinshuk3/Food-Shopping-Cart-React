@@ -6,7 +6,7 @@ const CartProvider = (props) => {
   const addItemToCartHandler = (item) => {};
   const removeItemToCartHandler = (id) => {};
 
-  const cartContext = {
+  const defaultVal = {
     items: [],
     totalAmount: 0,
     addItem: addItemToCartHandler,
@@ -14,7 +14,7 @@ const CartProvider = (props) => {
   };
   return (
     // Any component being wrapped here will get access to the CartContext using the provider
-    <CartContext.Provider value={cartContext}>
+    <CartContext.Provider value={defaultVal}>
       {props.children}
     </CartContext.Provider>
   );
