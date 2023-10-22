@@ -1,17 +1,36 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import classes from "./HeaderCartButton.module.css"
 import CartContext from "../../store/cart-context";
 
 const HeaderCartButton = (props) => {
+  const [buttonIsAnimated, setButtonIsAnimated] = useState(false)
   const cartCtx = useContext(CartContext)
+  const {items} = cartCtx;
 
   // for every iteration of array element curNum keeps getting changed based on result we returned in prev execution
-  const numOfCartItems = cartCtx.items.reduce((curNum, item)=> {
+  const numOfCartItems = items.reduce((curNum, item)=> {
     return curNum + item.amount
   }, 0)
 
+  const buttonClasses = `${classes.button} ${buttonIsAnimated ? classes.bump : ''}`
+
+  useEffect(() =>{
+    if(items.length === 0){
+      return
+    }
+    setButtonIsAnimated(true)
+
+    const timer = setTimeout(() => {
+      setButtonIsAnimated(false)
+    }, 300)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [items])
+
   return (
-    <button className={classes.button} onClick={props.onHeaderClick}>
+    <button className={buttonClasses} onClick={props.onHeaderClick}>
       <span className={classes.icon}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
