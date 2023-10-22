@@ -9,8 +9,30 @@ const defaultCartState = {
 //reducer function to be used by useReducer
 const cartReducer = (state, action) => {
   if(action.type === 'ADD-ITEM'){
-    const updatedItems = state.items.concat(action.item)
+
     const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
+    // check if item already exists in cart t/f
+    const exisitingCartItemIndex = state.items.findIndex(item => {
+      return item.id === action.item.id
+    })
+
+    // get the item from item array
+    const existingCartItem = state.items[exisitingCartItemIndex]
+    let updatedItems;
+
+    if(existingCartItem){
+      // change the amount only of item as it already exists
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount
+      }
+
+      // replace item in the items array
+      updatedItems = [...state.items]
+      updatedItems[exisitingCartItemIndex] = updatedItem
+    } else{
+      updatedItems = state.items.concat(action.item)
+    }
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount
